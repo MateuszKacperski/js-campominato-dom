@@ -46,12 +46,15 @@ const generateBombs = (maxBombsNumber, totalBombs) => {
 
 // righe e celle
 
-const rows = 3;
-const cols = 3;
+const rows = 10;
+const cols = 10;
 const totalCells = rows * cols;
 
 //variabile bombe totali
-const totBombs = 1;
+const totBombs = 16;
+
+//creo il punteggio massimo
+const maxPoints = totalCells - totBombs ;
 
 //genero le bombe
 const bombs = generateBombs(totalCells, totBombs);
@@ -62,8 +65,11 @@ console.log(bombs);
 
 button.addEventListener('click', function(){
 
+    let gameOver = false;
+
 button.innerText = 'Restart';
 grid.innerHTML = ' ';
+displayScore.innerText = 'Score:';
 
 
 
@@ -81,6 +87,8 @@ grid.innerHTML = ' ';
 
         cell.addEventListener('click', function(){
 
+            if(gameOver) return;
+
             if(cell.classList.contains('clicked')) return;
 
             cell.classList.add('clicked');
@@ -91,11 +99,22 @@ grid.innerHTML = ' ';
             const hitBomb = bombs.includes(i);
             
             if(hitBomb){
-                console.log('Hai preso la bomba! HAI PERSO !!!!')
-            }
+                cell.classList.add('bomb');
+                alert('Hai preso la bomba, HAI PERSO !!!! Il tuo punteggio è:' + ' ' + score);
+                gameOver = true;
+            }else{
 
             //aumento il punteggio e lo stampo in maggina man mano che aumenta
             displayScore.innerText = 'Score:' + (++score);
+
+            if(score === maxPoints){
+                alert('Hai vinto Complimenti !!!');
+                gameOver = true;
+            }
+
+            }
+
+         
            
         })
    
