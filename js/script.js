@@ -23,19 +23,40 @@ function createCell () {
 }
 
 
-const addNumber = number => number + 1
+const addNumber = number => number
 
 
+
+const generateBombs = (maxBombsNumber, totalBombs) => {
+
+    const bombs = [];
+
+    while (bombs.length < totalBombs) {
+        const randomNumber = Math.floor(Math.random() * maxBombsNumber) + 1;
+        
+        if(!bombs.includes(randomNumber)){
+            bombs.push(randomNumber);
+        }
+
+        
+    }
+    return bombs;
+}
 
 
 // righe e celle
 
-const rows = 10;
-const cols = 10;
+const rows = 3;
+const cols = 3;
 const totalCells = rows * cols;
 
-// Variabile di conteggio usata per impedire di azionare il bottone piu volte
-let count = 0;
+//variabile bombe totali
+const totBombs = 1;
+
+//genero le bombe
+const bombs = generateBombs(totalCells, totBombs);
+console.log(bombs);
+
 
 // aggiungo azione dopo aver cliccato sul bottone
 
@@ -47,7 +68,7 @@ grid.innerHTML = ' ';
 
 
         // creo celle
-    for(let i = 0; i < totalCells; i++){
+    for(let i = 1; i <= totalCells; i++){
 
         // creo cella nel html 
         const cell = createCell();
@@ -59,14 +80,25 @@ grid.innerHTML = ' ';
      
 
         cell.addEventListener('click', function(){
-            
+
             if(cell.classList.contains('clicked')) return;
 
             cell.classList.add('clicked');
-            console.log(numero);
+            console.log(i);
+            
+
+            //creo variabile bomba beccata
+            const hitBomb = bombs.includes(i);
+            
+            if(hitBomb){
+                console.log('Hai preso la bomba! HAI PERSO !!!!')
+            }
+
             //aumento il punteggio e lo stampo in maggina man mano che aumenta
             displayScore.innerText = 'Score:' + (++score);
+           
         })
+   
 
 
         grid.appendChild(cell);
