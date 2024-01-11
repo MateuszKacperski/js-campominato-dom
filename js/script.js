@@ -1,5 +1,3 @@
-console.log('JS OK');
-
 // recupero il bottone
 const button = document.querySelector('.btn');
 
@@ -7,6 +5,13 @@ const button = document.querySelector('.btn');
 
 const grid = document.getElementById('grid');
 
+//recupero il div del punteggio
+const displayScore = document.getElementById('score');
+
+
+//variabile del conteggio 
+
+let score = 0;
 
 //funzioni
 
@@ -34,7 +39,7 @@ let count = 0;
 
 // aggiungo azione dopo aver cliccato sul bottone
 
-button.addEventListener('click', function(e){
+button.addEventListener('click', function(){
 
 button.innerText = 'Restart';
 grid.innerHTML = ' ';
@@ -51,11 +56,16 @@ grid.innerHTML = ' ';
         //Inserisco il numero all'interno della cella
         const numero = addNumber(i);
         cell.innerText = numero;
+     
 
         cell.addEventListener('click', function(){
-            cell.classList.add('clicked');
-            console.log(i);
+            
             if(cell.classList.contains('clicked')) return;
+
+            cell.classList.add('clicked');
+            console.log(numero);
+            //aumento il punteggio e lo stampo in maggina man mano che aumenta
+            displayScore.innerText = 'Score:' + (++score);
         })
 
 
